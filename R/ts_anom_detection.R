@@ -12,7 +12,7 @@
 #' @param direction Directionality of the anomalies to be detected. One of:
 #'        `pos`, `neg`, `both`.
 #' @param alpha The level of statistical significance with which to accept or reject anomalies.
-#' @param only_last Find and report anomalies only within the last day or hr in the time seriess.
+#' @param only_last Find and report anomalies only within the last day or hr in the time series.
 #'        One of `NULL`, `day`, `hr`.
 #' @param threshold Only report positive going anoms above the threshold specified. One of:
 #'        `None`, `med_max`, `p95`, `p99`.
