@@ -59,7 +59,7 @@ The following outstanding PRs from the original repo are included:
 - PR [#92](https://github.com/twitter/AnomalyDetection/pull/92) (@caijun) inherently resolved
 
 If those authors find this repo, please add yourselves to the `DESCRIPTION` as 
-contirbutors.
+contributors.
 
 ## What's Inside The Tin
 
