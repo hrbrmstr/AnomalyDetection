@@ -96,6 +96,7 @@ detect_anoms <- function(data, k = 0.49, alpha = 0.05, num_obs_per_period = NULL
 
   num_anoms <- 0L
 
+  data$sel <- TRUE
   # Compute test statistic until r=max_outliers values have been
   # removed from the sample.
   for (i in 1L:max_outliers) {
@@ -104,16 +105,16 @@ detect_anoms <- function(data, k = 0.49, alpha = 0.05, num_obs_per_period = NULL
 
     if (one_tail) {
       if (upper_tail) {
-        ares <- data[[2L]] - func_ma(data[[2L]])
+        ares <- data[[2L]][data$sel] - func_ma(data[[2L]][data$sel])
       } else {
-        ares <- func_ma(data[[2L]]) - data[[2L]]
+        ares <- func_ma(data[[2L]][data$sel]) - data[[2L]][data$sel]
       }
     } else {
-      ares <- abs(data[[2L]] - func_ma(data[[2L]]))
+      ares <- abs(data[[2L]][data$sel] - func_ma(data[[2L]][data$sel]))
     }
 
     # protect against constant time series
-    data_sigma <- func_sigma(data[[2L]])
+    data_sigma <- func_sigma(data[[2L]][data$sel])
     if (data_sigma == 0) break
 
     ares <- ares / data_sigma
@@ -121,10 +122,10 @@ detect_anoms <- function(data, k = 0.49, alpha = 0.05, num_obs_per_period = NULL
 
     temp_max_idx <- which(ares == R)[1L]
 
-    R_idx[i] <- data[[1L]][temp_max_idx]
+    R_idx[i] <- data[[1L]][data$sel][temp_max_idx]
 
-    data <- data[-which(data[[1L]] == R_idx[i]), ]
-
+    data$sel[data[[1L]] == R_idx[i] & data$sel] <- FALSE
+    
     ## Compute critical value.
     if (one_tail) {
       p <- 1 - alpha / (n - i + 1)
